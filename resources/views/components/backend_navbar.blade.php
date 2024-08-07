@@ -161,16 +161,22 @@
                         aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
                             <span class="avatar avatar-sm rounded-circle">
-                                <img alt="Image placeholder" src="backend/img/theme/team-4.jpg">
+                                @if (auth()->user()->avatar != null)
+                                    <img alt="Image placeholder"
+                                        src="https://images.unsplash.com/photo-1722778610328-2457fedbac41?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                                @else
+                                    <img alt="Image placeholder" src="{{ asset('default.png') }}">
+                                @endif
                             </span>
                             <div class="media-body  ml-2  d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                                <span
+                                    class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name ?? 'hewo' }}</span>
                             </div>
                         </div>
                     </a>
                     <div class="dropdown-menu  dropdown-menu-right ">
                         <div class="dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">Welcome!</h6>
+                            <h6 class="text-overflow m-0">Account Settings</h6>
                         </div>
                         <a href="#!" class="dropdown-item">
                             <i class="ni ni-single-02"></i>

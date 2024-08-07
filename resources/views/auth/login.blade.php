@@ -128,7 +128,7 @@
                         <div class="card-body px-lg-5 py-lg-5">
                             @if (session()->has('success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <span class="alert-icon"><i class="ni ni-curved-next"></i></span>
+                                    <span class="alert-icon"><i class="ni ni-check-bold"></i></span>
                                     <span class="alert-text">{{ session('success') }}!</span>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>

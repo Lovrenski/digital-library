@@ -101,7 +101,7 @@
         <div class="col-8">
             <div class="card">
                 <div class="card-header bg-transparent">
-                    <h1>Welcome back, Admin!</h1>
+                    <h1>Welcome back, {{ auth()->user()->name }}!</h1>
                 </div>
                 <div class="card-body">
                     <h3 class="text-gray font-weight-500">Books List</h3>

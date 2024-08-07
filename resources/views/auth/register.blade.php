@@ -160,11 +160,11 @@
                                             name="password" required>
                                     </div>
                                 </div>
-                                @if (session()->has('error'))
+                                @error('email')
                                     <div class="text-muted font-italic"><small>error: <span
                                                 class="text-danger font-weight-700">email already exists</span></small>
                                     </div>
-                                @endif
+                                @enderror
                                 <div class="row my-4">
                                     <div class="col-12">
                                         <div class="custom-control custom-control-alternative custom-checkbox">

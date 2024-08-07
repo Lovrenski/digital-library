@@ -7,8 +7,15 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AdminController::class)->group(function () {
     Route::get('/dashboard', 'index')->name('dashboard');
     Route::get('/books', 'books')->name('books');
+    Route::get('/categories', 'categories')->name('categories');
+    Route::get('/permissions', 'permissions')->name('permissions');
     Route::get('/librarian-list', 'librarians')->name('librarians');
     Route::get('/users', 'users')->name('users');
+    Route::post('/delete/user/{id}', 'destroyUser')->name('destroy-user');
+    Route::post('/delete/librarian/{id}', 'destroyUser')->name('destroy-librarian');
+    Route::post('/delete/category/{id}', 'destroyCategory')->name('destroy-category');
+    Route::post('/add/librarian', 'addLibrarian')->name('add-librarian');
+    Route::post('/add/category', 'addCategory')->name('add-category');
 });
 
 Route::controller(AuthController::class)->group(function () {

@@ -43,20 +43,14 @@ class AuthController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:5',
         ]);
 
         $data['password'] = bcrypt($data['password']);
 
-        $email = User::where('email', $data['email'])->first();
-
-        if ($email == null) {
-            User::create($data);
-            return redirect()->route('login')->with('success', 'Registration Success!');
-        } else {
-            return redirect()->back()->with('error', 'Email already exist');
-        }
+        User::create($data);
+        return redirect()->route('login')->with('success', 'Registration Success!');
     }
 
     public function logout(Request $request)
