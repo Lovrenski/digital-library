@@ -171,7 +171,7 @@
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-align-left-2"></i></span>
+                                            <span class="input-group-text"><i class="ni ni-single-copy-04"></i></span>
                                         </div>
                                         <input class="form-control" placeholder="Title" type="text"
                                             name="title">
@@ -192,18 +192,36 @@
                                             <span class="input-group-text"><i
                                                     class="ni ni-calendar-grid-58"></i></span>
                                         </div>
-                                        <input class="form-control" placeholder="Author" type="date"
-                                            name="author">
+                                        <input class="form-control" type="date" name="year">
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i
-                                                    class="ni ni-calendar-grid-58"></i></span>
+                                            <span class="input-group-text"><i class="ni ni-align-left-2"></i></span>
                                         </div>
-                                        <input class="form-control" placeholder="Author" type="date"
-                                            name="author">
+                                        <textarea class="form-control" name="synopsis" placeholder="Synopsis" cols="30" rows="5"
+                                            name="synopsis"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-tag"></i></span>
+                                        </div>
+                                        <select class="form-control" name="categories" id="categories">
+                                            <option value="">AA</option>
+                                            <option value="">AA</option>
+                                            <option value="">AA</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-align-left-2"></i></span>
+                                        </div>
+                                        <input type="file" name="cover" class="form-control">
                                     </div>
                                 </div>
                                 <div class="text-center">
