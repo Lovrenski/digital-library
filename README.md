@@ -13,7 +13,7 @@
 ```bash
 git clone https://github.com/Lovrenski/digital-library.git
 ```
-<p>Open it, then run this in commad</p>
+<p>Open it, then run this in command</p>
 
 ```bash
 php artisan storage:link
