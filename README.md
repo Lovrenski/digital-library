@@ -8,6 +8,8 @@
 
 ## How to Run
 <p>If you are curious about this project, you can clone it for yourself.</p>
+<p>First, clone this project</p>
+<code>git clone </code>
 
 ## License
 
