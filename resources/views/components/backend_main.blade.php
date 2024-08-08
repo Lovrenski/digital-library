@@ -19,6 +19,7 @@
     <!-- Argon CSS -->
     <link rel="stylesheet" href="{{ asset('/backend/css/argon.css?v=1.2.0') }}" type="text/css">
 
+    <link rel="stylesheet" href="{{ asset('/dist/css/select2.min.css') }}" type="text/css">
 </head>
 
 <body>
@@ -73,6 +74,16 @@
     <script src="{{ asset('/backend/vendor/chart.js/dist/Chart.extension.js') }}"></script>
     <!-- Argon JS -->
     <script src="{{ asset('/backend/js/argon.js?v=1.2.0') }}"></script>
+    {{-- Select2 --}}
+    <script src="{{ asset('/dist/js/select2.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.categories').select2({
+                placeholder: 'Select a category',
+                allowClear: true
+            });
+        });
+    </script>
 </body>
 
 </html>

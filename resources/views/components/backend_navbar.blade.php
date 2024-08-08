@@ -170,7 +170,7 @@
                             </span>
                             <div class="media-body  ml-2  d-none d-lg-block">
                                 <span
-                                    class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name ?? 'hewo' }}</span>
+                                    class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name ?? 'Default' }}</span>
                             </div>
                         </div>
                     </a>

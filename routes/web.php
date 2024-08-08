@@ -16,6 +16,7 @@ Route::controller(AdminController::class)->group(function () {
     Route::post('/delete/category/{id}', 'destroyCategory')->name('destroy-category');
     Route::post('/add/librarian', 'addLibrarian')->name('add-librarian');
     Route::post('/add/category', 'addCategory')->name('add-category');
+    Route::post('/add/book', 'addBook')->name('add-book');
 });
 
 Route::controller(AuthController::class)->group(function () {

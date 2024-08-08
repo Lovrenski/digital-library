@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\User;
 use App\Models\Books;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -25,6 +27,31 @@ class AdminController extends Controller
             'categories' => $categories,
             'books' => $books,
         ]);
+    }
+
+    public function addBook(Request $request)
+    {
+        $data = $request->validate([
+            'title'        => 'required|min:3',
+            'author'       => 'required|min:3',
+            'year'         => 'required|date',
+            'synopsis'     => 'required',
+            'cover'        => 'required|file|mimes:jpg,jpeg,png|max:2048',
+            'categories'   => 'required|array',
+            'categories.*' => 'exists:categories,id',
+            'file'         => 'required|file|mimes:pdf|max:20000',
+        ]);
+
+        $data['publisher'] = auth()->user()->name;
+        $data['slug'] = Str::of(request('title'))->slug('-');
+        $data['cover'] = $request->file('cover')->store('covers', 'public');
+        $data['file'] = $request->file('file')->store('files', 'public');
+
+        $book = Books::create($data);
+
+        $book->category()->attach($data['categories']);
+
+        return redirect()->back()->with('success', 'Book added successfully');
     }
 
     public function categories()

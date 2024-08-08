@@ -45,57 +45,37 @@
                         </div>
                     @enderror
                     <div class="row">
-                        <div class="col-4">
-                            <div class="card">
-                                <img class="card-img-top"
-                                    src="https://s.kaskus.id/images/2016/03/10/7739258_20160310102212.jpg"
-                                    alt="cover">
-                                <div class="card-body">
-                                    <h2 class="card-title">Card title</h2>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the
-                                        bulk
-                                        of the card's content.</p>
-                                    <div class="mb-4">
-                                        <span class="badge badge-default" style="font-size: 14px;">Default</span>
+                        @if (count($books) > 0)
+                            @foreach ($books as $b)
+                                <div class="col-4">
+                                    <div class="card">
+                                        <img class="card-img-top" src="{{ asset('storage/' . $b->cover) }}"
+                                            alt="cover">
+                                        <div class="card-body">
+                                            <h2 class="card-title">{{ $b->title }}</h2>
+                                            <p class="card-text">{{ $b->synopsis }}</p>
+                                            <div class="mb-4">
+                                                @foreach ($b->category as $cat)
+                                                    <span class="badge badge-default"
+                                                        style="font-size: 14px;">{{ $cat->name }}</span>
+                                                @endforeach
+                                            </div>
+                                            <button class="btn btn-default" data-toggle="modal"
+                                                data-target="#modal-edit-book">Edit</button>
+                                            <button class="btn btn-danger" data-toggle="modal"
+                                                data-target="#modal-delete-book">Delete</button>
+                                        </div>
                                     </div>
-                                    <button class="btn btn-default" data-toggle="modal"
-                                        data-target="#modal-edit-book">Edit</button>
-                                    <button class="btn btn-danger" data-toggle="modal"
-                                        data-target="#modal-delete-book">Delete</button>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="col mt-3">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <span class="alert-icon"><i class="ni ni-bell-55"></i></span>
+                                    <span class="alert-text">No Books Found! Go add new book</span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="card">
-                                <img class="card-img-top" src="/backend/img/theme/img-1-1000x600.jpg" alt="cover">
-                                <div class="card-body">
-                                    <h2 class="card-title">Card title</h2>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the
-                                        bulk
-                                        of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Edit</a>
-                                    <a href="#" class="btn btn-primary">Delete</a>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="card">
-                                <img class="card-img-top" src="/backend/img/theme/img-1-1000x600.jpg" alt="cover">
-                                <div class="card-body">
-                                    <h2 class="card-title">Card title</h2>
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the
-                                        bulk
-                                        of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Edit</a>
-                                    <a href="#" class="btn btn-primary">Delete</a>
-
-                                </div>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -166,7 +146,7 @@
                             <h1 class="text-center p-0">Add New Book</h1>
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
-                            <form role="form" action="/add/category" method="POST">
+                            <form role="form" action="/add/book" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
@@ -206,22 +186,31 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-tag"></i></span>
-                                        </div>
-                                        <select class="form-control" name="categories" id="categories">
-                                            <option value="">AA</option>
-                                            <option value="">AA</option>
-                                            <option value="">AA</option>
+                                        <label class="form-control-label" for="categories">Select Categories</label>
+                                        <select class="form-control categories" id="categories" name="categories[]"
+                                            multiple="multiple">
+                                            @foreach ($categories as $c)
+                                                <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label class="form-control-label" for="cover">Cover</label>
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-align-left-2"></i></span>
+                                            <span class="input-group-text"><i class="ni ni-image"></i></span>
                                         </div>
-                                        <input type="file" name="cover" class="form-control">
+                                        <input type="file" id="cover" name="cover" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-control-label" for="file">File</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
+                                        </div>
+                                        <input type="file" id="file" name="file" class="form-control">
                                     </div>
                                 </div>
                                 <div class="text-center">
