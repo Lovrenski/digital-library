@@ -2,9 +2,9 @@
 <p>This is digital library app. Got this project from school. There are two options... digital books and physical books. In this project i choose digital</p>
 <p>🙇‍♂️ There's my name, no, and class</p>
 <ul>
-    <li>Name  : Naufal Azka Fadhlillah</li>
-    <li>No    : 26</li>
-    <li>Class : XII RPL C</li>
+    <li><td>Name :</td><td>Naufal Azka Fadhlillah</td></li>
+    <li><td>No :</td><td>26</td></li>
+    <li><td>Class :</td><td>XII RPL C</td></li>
 </ul>
 <p>⚡ Technologies used in this project :</p>
 <ul>
