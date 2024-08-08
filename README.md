@@ -1,11 +1,12 @@
 ## About Projects
 <p>This is digital library app. Got this project from school. There are two options... digital books and physical books. In this project i choose digital</p>
+<p>🙇‍♂️ There's my name, no, and class</p>
 <ul>
     <li>Name  : Naufal Azka Fadhlillah</li>
     <li>No    : 26</li>
     <li>Class : XII RPL C</li>
 </ul>
-<p>Technologies used in this project :</p>
+<p>⚡ Technologies used in this project :</p>
 <ul>
     <li>Laravel 11</li>
     <li>Bootstrap 4</li>
