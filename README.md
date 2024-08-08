@@ -5,6 +5,12 @@
     <li>No    : 26</li>
     <li>Class : XII RPL C</li>
 </ul>
+<p>Technologies used in this project :</p>
+<ul>
+    <li>Laravel 11</li>
+    <li>Bootstrap 4</li>
+    <li>Select2</li>
+</ul>
 
 ## How to Run
 <p>If you are curious about this project, you can clone it for yourself.</p>
