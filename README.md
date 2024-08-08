@@ -19,14 +19,10 @@ git clone https://github.com/Lovrenski/digital-library.git
 php artisan storage:link
 ```
 
-<p>Don't forget to create the database and configure the ".env" file, then migrate it</p>
+<p>Don't forget to create the database and configure the <code>.env</code> file, then migrate it</p>
 
 ```bash
 php artisan migrate
-```
-
-```bash
-php artisan storage:link
 ```
 
 <p>Finally, start your local db and run this to start server locally</p>
