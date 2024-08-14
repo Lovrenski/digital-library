@@ -45,25 +45,57 @@
                         </div>
                     @enderror
                     <div class="row">
-                        @if (count($books) > 0)
+                        @if ($books->count())
                             @foreach ($books as $b)
                                 <div class="col-4">
                                     <div class="card">
                                         <img class="card-img-top" src="{{ asset('storage/' . $b->cover) }}"
                                             alt="cover">
                                         <div class="card-body">
-                                            <h2 class="card-title">{{ $b->title }}</h2>
-                                            <p class="card-text">{{ $b->synopsis }}</p>
-                                            <div class="mb-4">
+                                            <div class="card-title">
+                                                <h2>{{ $b->title }}</h2>
+                                                <span class="font-weight-500 mb-1" style="font-size: 16px">Author :
+                                                    {{ $b->author }}</span><br>
+                                                <span class="font-weight-500" style="font-size: 14px"><i
+                                                        class="ni ni-calendar-grid-58"></i>
+                                                    {{ $b->year }}</span>
+                                            </div>
+                                            <p class="card-text">{{ substr($b->synopsis, 0, 300) }}...</p>
+                                            <div class="mb-3">
                                                 @foreach ($b->category as $cat)
-                                                    <span class="badge badge-default"
+                                                    <span class="badge badge-default mb-2"
                                                         style="font-size: 14px;">{{ $cat->name }}</span>
                                                 @endforeach
                                             </div>
-                                            <button class="btn btn-default" data-toggle="modal"
-                                                data-target="#modal-edit-book">Edit</button>
+                                            <a class="btn btn-default" href="books/{{ $b->id }}">Edit</a>
                                             <button class="btn btn-danger" data-toggle="modal"
-                                                data-target="#modal-delete-book">Delete</button>
+                                                data-target="#modal-delete-book{{ $b->id }}">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="modal-delete-book{{ $b->id }}" tabindex="-1"
+                                    role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                                    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h6 class="modal-title" id="modal-title-default">Delete Book
+                                                </h6>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure want to delete this book?</p>
+                                            </div>
+                                            <form action="/delete/book/{{ $b->id }}" method="POST">
+                                                @csrf
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Confirm</button>
+                                                    <button type="button" class="btn btn-link  ml-auto"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -72,65 +104,10 @@
                             <div class="col mt-3">
                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                     <span class="alert-icon"><i class="ni ni-bell-55"></i></span>
-                                    <span class="alert-text">No Books Found! Go add new book</span>
+                                    <span class="alert-text">No Books Found! Go add some book</span>
                                 </div>
                             </div>
                         @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal-delete-book" tabindex="-1" role="dialog" aria-labelledby="modal-default"
-        aria-hidden="true">
-        <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="modal-title-default">Delete Book
-                    </h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure want to delete this book?</p>
-                </div>
-                <form action="/delete/book" method="POST">
-                    @csrf
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
-                        <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal-edit-book" tabindex="-1" role="dialog" aria-labelledby="modal-form"
-        aria-hidden="true">
-        <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="card bg-secondary border-0 mb-0">
-                        <div class="card-header bg-transparent">
-                            <h1 class="text-center p-0">Edit Book</h1>
-                        </div>
-                        <div class="card-body px-lg-5 py-lg-5">
-                            <form role="form" action="/add/category" method="POST">
-                                @csrf
-                                <div class="form-group mb-3">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
-                                        </div>
-                                        <input class="form-control" placeholder="Name" type="text"
-                                            name="name">
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary my-4">Edit Book</button>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>

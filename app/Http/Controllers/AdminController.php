@@ -14,8 +14,10 @@ class AdminController extends Controller
 {
     public function index()
     {
+        $books = Books::get();
         return view('admin.dashboard', [
-            'header' => 'dashboard'
+            'header' => 'dashboard',
+            'books' => $books,
         ]);
     }
 
@@ -32,7 +34,7 @@ class AdminController extends Controller
     public function addBook(Request $request)
     {
         $data = $request->validate([
-            'title'        => 'required|min:3',
+            'title'        => 'required|min:3|unique:books,title',
             'author'       => 'required|min:3',
             'year'         => 'required|date',
             'synopsis'     => 'required',
@@ -43,15 +45,88 @@ class AdminController extends Controller
         ]);
 
         $data['publisher'] = auth()->user()->name;
-        $data['slug'] = Str::of(request('title'))->slug('-');
-        $data['cover'] = $request->file('cover')->store('covers', 'public');
-        $data['file'] = $request->file('file')->store('files', 'public');
+        $data['slug']      = Str::of(request('title'))->slug('-');
+        $data['cover']     = $request->file('cover')->store('covers', 'public');
+        $data['file']      = $request->file('file')->store('files', 'public');
 
         $book = Books::create($data);
 
         $book->category()->attach($data['categories']);
 
         return redirect()->back()->with('success', 'Book added successfully');
+    }
+
+    public function editBook($id)
+    {
+        $book = Books::findOrFail($id);
+        $categories = Category::get();
+        return view('admin.edit-book', [
+            'book' => $book,
+            'categories' => $categories,
+        ]);
+    }
+
+    public function updateBook(Request $request, $id)
+    {
+        $data = $request->validate([
+            'title'        => 'required|min:3|unique:books,title,' . $id,
+            'author'       => 'required|min:3',
+            'year'         => 'required|date',
+            'synopsis'     => 'required|string',
+            'cover'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'file'         => 'nullable|mimes:pdf,doc,docx|max:10000',
+            'categories'   => 'nullable|array',
+            'categories.*' => 'exists:categories,id',
+        ]);
+
+        $data['slug'] = Str::of($request->title)->slug('-');
+
+        $book = Books::findOrFail($id);
+
+        $book->title    = $data['title'];
+        $book->slug     = $data['slug'];
+        $book->author   = $data['author'];
+        $book->year     = $data['year'];
+        $book->synopsis = $data['synopsis'];
+
+        if ($request->hasFile('cover')) {
+            if ($book->cover && public_path('storage/' . $book->cover) !== null) {
+                unlink(public_path('storage/' . $book->cover));
+            }
+            $book->cover = $request->file('cover')->store('covers', 'public');
+        }
+
+        if ($request->hasFile('file')) {
+            if ($book->file && public_path('storage/' . $book->file) !== null) {
+                unlink(public_path('storage/' . $book->file));
+            }
+            $book->file = $request->file('file')->store('files', 'public');
+        }
+
+        $book->save();
+
+        if ($request->has('categories')) {
+            $book->category()->sync($request->categories);
+        }
+
+        return redirect()->route('books')->with('success', 'Book successfully updated!');
+    }
+
+    public function destroyBook($id)
+    {
+        $book = Books::findOrFail($id);
+
+        if ($book->cover !== null) {
+            unlink(public_path('storage/' . $book->cover));
+        }
+
+        if ($book->file !== null) {
+            unlink(public_path('storage/' . $book->file));
+        }
+
+        $book->category()->detach();
+        $book->delete();
+        return redirect()->back()->with('success', 'Book deleted successfully!');
     }
 
     public function categories()
@@ -90,12 +165,12 @@ class AdminController extends Controller
     public function addLibrarian(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email',
+            'name'     => 'required|min:3',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:5',
         ]);
 
-        $data['role'] = 'librarian';
+        $data['role']     = 'librarian';
         $data['password'] = bcrypt($data['password']);
 
         User::create($data);

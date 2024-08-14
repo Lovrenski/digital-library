@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('author');
             $table->string('publisher');
             $table->date('year');
-            $table->string('synopsis');
+            $table->text('synopsis');
             $table->string('cover');
             $table->string('file');
             $table->timestamps();
