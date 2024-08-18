@@ -2,7 +2,14 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ReaderController;
 use Illuminate\Support\Facades\Route;
+
+Route::controller(ReaderController::class)->group(function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/book/{id}', 'book')->name('book');
+    Route::get('/search', 'search')->name('search');
+});
 
 Route::controller(AdminController::class)->group(function () {
     Route::get('/dashboard', 'index')->name('dashboard');

@@ -88,7 +88,8 @@
                                 <input type="file" id="file" name="file" class="form-control">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary my-4">Add New Book</button>
+                        <button type="submit" class="btn btn-primary my-4">Save</button>
+                        <a href="/books" class="btn btn-default my-4">Back</a>
                     </form>
                 </div>
             </div>
