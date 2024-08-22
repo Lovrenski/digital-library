@@ -2,7 +2,7 @@
     <div class="scrollbar-inner">
         <!-- Brand -->
         <div class="sidenav-header  align-items-center">
-            <a class="navbar-brand" href="javascript:void(0)">
+            <a class="navbar-brand" href="/">
                 <img src="{{ asset('/backend/img/brand/blue.png') }}" class="navbar-brand-img" alt="logo">
             </a>
         </div>
@@ -30,7 +30,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/read-permissions">
+                        <a class="nav-link" href="/permissions">
                             <i class="ni ni-align-left-2 text-yellow"></i>
                             <span class="nav-link-text">Read Permissions</span>
                         </a>

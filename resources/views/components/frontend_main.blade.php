@@ -45,15 +45,8 @@
     <!-- Header -->
     <x-frontend_navbar />
 
-    <!-- Collection -->
-    <x-collection />
-
     <!-- Product -->
-    <section class="bg0 p-t-23 p-b-140 mt-4">
-        <div class="container">
-            {{ $slot }}
-        </div>
-    </section>
+    {{ $slot }}
 
     <!-- Footer -->
     <x-frontend_footer />

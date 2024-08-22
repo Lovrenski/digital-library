@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user');
+            $table->foreignId('user_id');
+            $table->foreignId('book_id');
             $table->string('librarian');
-            $table->foreignId('book');
-            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
+            $table->enum('status', ['process', 'accepted', 'rejected'])->default('process');
             $table->string('note')->nullable();
             $table->timestamps();
         });

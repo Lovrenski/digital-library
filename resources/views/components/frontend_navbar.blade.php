@@ -9,17 +9,26 @@
                 </div>
 
                 <div class="right-top-bar flex-w h-full">
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
-                        Admin
-                    </a>
+                    @if (auth()->user())
+                        @if (auth()->user()->role == 'admin')
+                            <a href="/dashboard" class="flex-c-m trans-04 p-lr-25">
+                                Dashboard
+                            </a>
+                        @endif
+                    @endif
 
                     <a href="#" class="flex-c-m trans-04 p-lr-25">
                         My Account
                     </a>
-
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
-                        Logout
-                    </a>
+                    @if (auth()->user())
+                        <button class="ml-4 btn btn-outline-secondary" data-toggle="modal" data-target="#logoutModal">
+                            Logout
+                        </button>
+                    @else
+                        <a href="/login" class="flex-c-m trans-04 p-lr-25">
+                            Login
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -35,16 +44,12 @@
                 <!-- Menu desktop -->
                 <div class="menu-desktop">
                     <ul class="main-menu">
-                        <li class="active-menu">
+                        <li>
                             <a href="/">Home</a>
                         </li>
 
                         <li>
-                            <a href="/about">About</a>
-                        </li>
-
-                        <li>
-                            <a href="/contact">Contact</a>
+                            <a href="/requests">Requests</a>
                         </li>
                     </ul>
                 </div>
@@ -59,10 +64,6 @@
                         data-notify="0">
                         <i class="zmdi zmdi-favorite-outline"></i>
                     </div>
-
-                    <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                        <i class="zmdi zmdi-account"></i>
-                    </a>
                 </div>
             </nav>
         </div>
@@ -132,6 +133,30 @@
                 </button>
                 <input class="plh3" type="text" name="search" placeholder="Search...">
             </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" style="margin-top: 10rem;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Logout</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to logout?
+                </div>
+                <form action="/logout" method="POST">
+                    @csrf
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </header>

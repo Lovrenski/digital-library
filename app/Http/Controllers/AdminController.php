@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
+use App\Models\Permissions;
 use App\Models\User;
 use App\Models\Books;
 use App\Models\Category;
@@ -149,9 +150,18 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Category added successfully');
     }
 
+    public function destroyCategory($id)
+    {
+        Category::find($id)->delete();
+        return redirect()->back()->with('success', 'Category deleted successfully');
+    }
+
     public function permissions()
     {
-        return view('admin.permissions');
+        $permissions = Permissions::get();
+        return view('admin.permissions', [
+            'permissions' => $permissions,
+        ]);
     }
 
     public function librarians()
@@ -189,11 +199,5 @@ class AdminController extends Controller
     {
         User::find($id)->delete();
         return redirect()->back()->with('success', 'User deleted successfully');
-    }
-
-    public function destroyCategory($id)
-    {
-        Category::find($id)->delete();
-        return redirect()->back()->with('success', 'Category deleted successfully');
     }
 }

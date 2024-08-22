@@ -16,8 +16,13 @@ class Books extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function collections()
+    public function collection()
     {
         return $this->hasMany(Collections::class);
+    }
+
+    public function permission()
+    {
+        return $this->hasMany(Permissions::class);
     }
 }
