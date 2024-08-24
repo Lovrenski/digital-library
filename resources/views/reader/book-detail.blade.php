@@ -46,16 +46,24 @@
                         <div class="p-t-33">
                             <div class="flex-w">
                                 <div class="size-204 flex-w flex-m respon6-next">
-                                    @if ($permission->status == 'process')
-                                        <span
-                                            class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-                                            On Process
-                                        </span>
-                                    @elseif ($permission->status == 'accepted')
-                                        <a href="#"
-                                            class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-                                            Read Now
-                                        </a>
+                                    @if ($permission && $permission->expired != date('Y-m-d'))
+                                        @if ($permission->status == 'process')
+                                            <span
+                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                                On Process
+                                            </span>
+                                        @elseif ($permission->status == 'accepted')
+                                            <a href="{{ asset('storage/' . $permission->book->file) }}#toolbar=0"
+                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                                Read Now
+                                            </a>
+                                        @else
+                                            <button
+                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
+                                                data-toggle="modal" data-target="#reqModal">
+                                                Request Permission
+                                            </button>
+                                        @endif
                                     @else
                                         <button
                                             class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
@@ -76,8 +84,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item p-b-10">
-                            <a class="nav-link active" data-toggle="tab" href="#description"
-                                role="tab">Description</a>
+                            <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Synopsis</a>
                         </li>
 
                         <li class="nav-item p-b-10">

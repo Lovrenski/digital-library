@@ -182,6 +182,15 @@
                                         <th scope="col">Status</th>
                                     </tr>
                                 </thead>
+                                <tbody class="list">
+                                    @foreach ($permissions as $p)
+                                        <tr>
+                                            <td>{{ $p->user->name }}</td>
+                                            <td>{{ $p->book->title }}</td>
+                                            <td>{{ $p->status }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>

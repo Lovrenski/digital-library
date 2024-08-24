@@ -13,7 +13,7 @@ class ReaderController extends Controller
     public function index()
     {
         $books       = Books::get();
-        $categories  = Category::get();
+        $categories  = Category::orderBy('name', 'asc')->get();
         $collections = Collections::get();
 
         return view('reader.index', [
@@ -26,7 +26,7 @@ class ReaderController extends Controller
     public function show($slug)
     {
         $book       = Books::where('slug', $slug)->first();
-        $permission = Permissions::where('book_id', $book->id)->where('user_id', auth()->user()->id)->first();
+        $permission = Permissions::where('book_id', $book->id)->where('user_id', auth()->user()->id)->where('status', '!=', 'rejected')->first();
         return view('reader.book-detail', [
             'book'       => $book,
             'permission' => $permission,
@@ -35,7 +35,7 @@ class ReaderController extends Controller
 
     public function requests()
     {
-        $requests = Permissions::where('user_id', auth()->user()->id)->get();
+        $requests = Permissions::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return view('reader.requests', [
             'requests' => $requests,
         ]);

@@ -28,6 +28,7 @@ Route::middleware(['auth', 'role:admin,librarian'])->group(function () {
         Route::post('/add/librarian', 'addLibrarian')->name('add-librarian');
         Route::post('/add/category', 'addCategory')->name('add-category');
         Route::post('/add/book', 'addBook')->name('add-book');
+        Route::post('/process/{id}', 'process')->name('process');
         Route::post('/edit/book/{id}', 'updateBook')->name('update-book');
         Route::post('/delete/book/{id}', 'destroyBook')->name('delete-book');
     });

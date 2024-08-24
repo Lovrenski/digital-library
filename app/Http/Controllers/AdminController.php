@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Author;
-use App\Models\Permissions;
 use App\Models\User;
 use App\Models\Books;
 use App\Models\Category;
+use App\Models\Permissions;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,17 +14,19 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $books = Books::get();
+        $books       = Books::get();
+        $permissions = Permissions::where('created_at', now())->get();
         return view('admin.dashboard', [
-            'header' => 'dashboard',
-            'books' => $books,
+            'header'      => 'dashboard',
+            'books'       => $books,
+            'permissions' => $permissions,
         ]);
     }
 
     public function books()
     {
+        $books      = Books::get();
         $categories = Category::get();
-        $books = Books::get();
         return view('admin.books', [
             'categories' => $categories,
             'books' => $books,
@@ -132,7 +133,7 @@ class AdminController extends Controller
 
     public function categories()
     {
-        $categories = Category::get();
+        $categories = Category::orderBy('name', 'asc')->get();
         return view('admin.categories', [
             'categories' => $categories,
         ]);
@@ -158,10 +159,25 @@ class AdminController extends Controller
 
     public function permissions()
     {
-        $permissions = Permissions::get();
+        $permissions = Permissions::orderBy('created_at', 'desc')->get();
         return view('admin.permissions', [
             'permissions' => $permissions,
         ]);
+    }
+
+    public function process(Request $request, $id)
+    {
+        $data = $request->validate([
+            'status'  => 'required',
+        ]);
+
+        $data['note']      = $request->note;
+        $data['librarian'] = auth()->user()->name;
+
+        $permission = Permissions::where('id', $id);
+        $permission->update($data);
+
+        return redirect('permissions')->with('success', 'Processed Successfully!');
     }
 
     public function librarians()

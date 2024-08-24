@@ -30,15 +30,6 @@
                             </button>
                         </div>
                     @endif
-                    @error('name')
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <span class="alert-icon"><i class="ni ni-curved-next"></i></span>
-                            <span class="alert-text">{{ $message }}!</span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @enderror
                     <div class="table-responsive">
                         <div>
                             <table class="table align-items-center">
@@ -48,6 +39,7 @@
                                         <th scope="col">Reader Name</th>
                                         <th scope="col">Request Time</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Note</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -88,9 +80,19 @@
                                                     </span>
                                                 @endif
                                             </td>
+                                            <td>
+                                                @if ($p->note != null)
+                                                    <button class="btn btn-warning" data-toggle="modal"
+                                                        data-target="#note{{ $p->id }}">Read</button>
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
                                             <td class="text-right">
-                                                <button class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#modal-process{{ $p->id }}">Process</button>
+                                                @if ($p->status == 'process')
+                                                    <button class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#modal-process{{ $p->id }}">Process</button>
+                                                @endif
                                             </td>
                                             <div class="modal fade" id="modal-process{{ $p->id }}" tabindex="-1"
                                                 role="dialog" aria-labelledby="modal-form" aria-hidden="true">
@@ -100,13 +102,16 @@
                                                         <div class="modal-body p-0">
                                                             <div class="card bg-secondary border-0 mb-0">
                                                                 <div class="card-header bg-transparent">
-                                                                    <h1 class="text-center p-0">Add New Category</h1>
+                                                                    <h1 class="text-center p-0">Process Request</h1>
                                                                 </div>
                                                                 <div class="card-body px-lg-5 py-lg-5">
-                                                                    <form role="form" action="/add/category"
+                                                                    <form role="form"
+                                                                        action="/process/{{ $p->id }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         <div class="form-group mb-3">
+                                                                            <label for="expired"
+                                                                                class="form-control-label">Expired</label>
                                                                             <div
                                                                                 class="input-group input-group-merge input-group-alternative">
                                                                                 <div class="input-group-prepend">
@@ -114,19 +119,66 @@
                                                                                             class="ni ni-circle-08"></i></span>
                                                                                 </div>
                                                                                 <input class="form-control"
-                                                                                    placeholder="Name" type="text"
-                                                                                    name="name">
+                                                                                    type="date" id="expired"
+                                                                                    name="expired">
                                                                             </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="status"
+                                                                                class="form-control-label">Status</label>
+                                                                            <select class="form-control" name="status"
+                                                                                id="status">
+                                                                                <option value="accepted">Accept
+                                                                                </option>
+                                                                                <option value="rejected">Reject
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="note">Note
+                                                                                (Optional)
+                                                                            </label>
+                                                                            <textarea class="form-control" name="note" id="note" cols="30" rows="5"></textarea>
                                                                         </div>
                                                                         <div class="text-center">
                                                                             <button type="submit"
-                                                                                class="btn btn-primary my-4">Add New
-                                                                                Category</button>
+                                                                                class="btn btn-primary mt-2">
+                                                                                Save
+                                                                            </button>
                                                                         </div>
                                                                     </form>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade" id="note{{ $p->id }}" tabindex="-1"
+                                                role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                                                <div class="modal-dialog modal- modal-dialog-centered modal-"
+                                                    role="document">
+                                                    <div class="modal-content">
+
+                                                        <div class="modal-header">
+                                                            <h6 class="modal-title" id="modal-title-default">Note</h6>
+                                                            <button type="button" class="close"
+                                                                data-dismiss="note{{ $p->id }}"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">x</span>
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="modal-body">
+                                                            <p>
+                                                                {{ $p->note }}
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-link  ml-auto"
+                                                                data-dismiss="modal">Close</button>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>

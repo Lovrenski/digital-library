@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('librarian');
             $table->enum('status', ['process', 'accepted', 'rejected'])->default('process');
             $table->string('note')->nullable();
+            $table->date('expired')->nullable();
             $table->timestamps();
         });
     }
